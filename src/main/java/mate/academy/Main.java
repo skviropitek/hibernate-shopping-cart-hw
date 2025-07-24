@@ -1,7 +1,6 @@
 package mate.academy;
 
 import java.time.LocalDateTime;
-
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -18,11 +17,16 @@ public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
 
     public static void main(String[] args) {
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-        CinemaHallService cinemaHallService = (CinemaHallService) injector.getInstance(CinemaHallService.class);
-        MovieSessionService movieSessionService = (MovieSessionService) injector.getInstance(MovieSessionService.class);
-        UserService userService = (UserService) injector.getInstance(UserService.class);
-        ShoppingCartService shoppingCartService = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+        final MovieService movieService =
+                (MovieService) injector.getInstance(MovieService.class);
+        final CinemaHallService cinemaHallService =
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        final MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
+        final UserService userService =
+                (UserService) injector.getInstance(UserService.class);
+        final ShoppingCartService shoppingCartService =
+                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
         Movie movie = new Movie("Inception");
         movie.setDescription("Mind-bending thriller");
@@ -41,22 +45,24 @@ public class Main {
 
         User user = new User();
         user.setEmail("test@example.com");
-        user.setPassword("password123"); // password буде захешовано в UserService
+        user.setPassword("password123");
         userService.add(user);
 
         shoppingCartService.registerNewShoppingCart(user);
-
         shoppingCartService.addSession(session, user);
 
         ShoppingCart cart = shoppingCartService.getByUser(user);
         System.out.println("Shopping cart for user: " + user.getEmail());
         cart.getTickets().forEach(ticket -> {
-            System.out.println("Ticket: movie=" + ticket.getMovieSession().getMovie().getTitle() +
-                    ", time=" + ticket.getMovieSession().getShowTime());
+            System.out.println("Ticket: movie="
+                    + ticket.getMovieSession().getMovie().getTitle()
+                    + ", time="
+                    + ticket.getMovieSession().getShowTime());
         });
 
         shoppingCartService.clear(cart);
         System.out.println("Shopping cart cleared.");
-        System.out.println("Tickets in cart after clearing: " + shoppingCartService.getByUser(user).getTickets().size());
+        System.out.println("Tickets in cart after clearing: "
+                + shoppingCartService.getByUser(user).getTickets().size());
     }
 }

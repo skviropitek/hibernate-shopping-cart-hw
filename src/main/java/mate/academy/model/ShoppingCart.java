@@ -1,6 +1,5 @@
 package mate.academy.model;
 
-import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -10,21 +9,22 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "shopping_cart")
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "shopping_cart_tickets")
-    List<Ticket> tickets;
+    private List<Ticket> tickets;
 
     public Long getId() {
         return id;
