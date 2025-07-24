@@ -23,7 +23,7 @@ public class ShoppingCart {
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shopping_cart_tickets")
+    @JoinColumn(name = "shopping_cart_id")
     private List<Ticket> tickets;
 
     public Long getId() {
